@@ -1,0 +1,63 @@
+syntax = "proto3";
+package kratos.api;
+
+option go_package = "faces/internal/conf;conf";
+
+import "google/protobuf/duration.proto";
+
+message Bootstrap {
+  Server server = 1;
+  Data data = 2;
+}
+
+message Server {
+  message HTTP {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  message GRPC {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  HTTP http = 1;
+  GRPC grpc = 2;
+}
+
+message Trace {
+  string endpoint = 1;
+}
+
+message Data {
+  message Database {
+    string driver = 1;
+    string source = 2;
+    int32 maxIdleConns = 3;
+    int32 maxOpenConns = 4;
+  }
+  message Redis {
+    string network = 1;
+    string addr = 2;
+    string password = 3;
+    google.protobuf.Duration read_timeout = 4;
+    google.protobuf.Duration write_timeout = 5;
+    google.protobuf.Duration dial_timeout = 6;
+    int32 poolSize = 7;
+    int32 minIdleConns = 8;
+    int32 db = 9;
+  }
+  Database database = 1;
+  Redis redis = 2;
+}
+
+message Registry {
+  message Etcd {
+    repeated string address = 1;
+  }
+  Etcd etcd = 1;
+}
+
+message Scheduler {
+  string hostPort = 1;
+}
