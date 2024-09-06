@@ -51,8 +51,16 @@ submodule:
 .PHONY: build
 # build
 build:
-	mkdir -p bin/mac   && CGO_ENABLED=0 GOOS=darwin  GOARCH=amd64 go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/mac/   ./cmd/oneCloud/
-	mkdir -p bin/linux && CGO_ENABLED=0 GOOS=linux   GOARCH=amd64 go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/linux/ ./cmd/oneCloud/
+	mkdir -p bin/mac   && CGO_ENABLED=0 GOOS=darwin  GOARCH=amd64 go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/mac/   ./commander/
+	mkdir -p bin/linux && CGO_ENABLED=0 GOOS=linux   GOARCH=amd64 go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/linux/ ./commander/
+
+
+	mkdir -p bin/mac   && CGO_ENABLED=0 GOOS=darwin  GOARCH=amd64 go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/mac/   ./soldier/
+	mkdir -p bin/linux && CGO_ENABLED=0 GOOS=linux   GOARCH=amd64 go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/linux/ ./soldier/
+
+	cd app && fyne package -os android -icon icon.png -appID cn.com.startops.camp
+	mkdir bin/android/ && mv app/app.apk bin/app.apk
+
 
 .PHONY: buildTool
 # buildTool

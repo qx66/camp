@@ -74,7 +74,7 @@ func main() {
 	g.GET("instruct", app.service.ListInstruct)
 	g.GET("instruct/:uuid", app.service.GetInstruct)
 	
-	err = g.Run(":18080")
+	err = g.Run(bc.Server.Http.Addr)
 	
 	logger.Error("程序异常", zap.Error(err))
 }

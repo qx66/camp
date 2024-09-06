@@ -47,7 +47,7 @@ var (
 )
 
 func init() {
-	flag.StringVar(&webSocketUrl, "webSocketUrl", "", "websocket Url (required)")
+	flag.StringVar(&webSocketUrl, "webSocketUrl", "", "websocket Url (required), e.g: ws://camp.startops.com.cn/connect")
 	flag.StringVar(&token, "token", "", "websocket token (required)")
 	flag.StringVar(&orgUuid, "orgUuid", "", "your orgUuid (required)")
 	flag.StringVar(&groupUuid, "groupUuid", "", "your groupUuid (required)")
