@@ -91,7 +91,7 @@ func main() {
 	
 	go app.webSocketUseCase.ProcessServiceMessage(ctx, receiveMsg, sendMsg)
 	
-	//go app.helloEcho(ctx, sendMsg)
+	go app.webSocketUseCase.HelloEcho(ctx, sendMsg)
 	
 	select {
 	case <-sig:

@@ -62,6 +62,8 @@ func main() {
 	
 	go iApp.webSocketUseCase.ProcessServiceMessage(ctx, receiveMsg, sendMsg)
 	
+	go iApp.webSocketUseCase.HelloEcho(ctx, sendMsg)
+	
 	myApp := app.New()
 	//myApp.Settings().SetTheme(&lTheme.MyTheme{})
 	win := myApp.NewWindow("Camp")

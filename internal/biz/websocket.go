@@ -108,6 +108,16 @@ func (webSocketUseCase *WebSocketUseCase) NewWebSocket(ctx context.Context, wsUr
 		for {
 			select {
 			case msg := <-sendMsg:
+				//
+				if msg.Type == ClientHelloEcho {
+					err := wsConn.WriteControl(websocket.PongMessage, []byte("1"), time.Now().Add(1*time.Second))
+					if err != nil {
+						webSocketUseCase.logger.Error("Error sending Pong", zap.Error(err))
+					}
+					continue
+				}
+				
+				//
 				b, err := json.Marshal(msg)
 				if err != nil {
 					webSocketUseCase.logger.Error("序列化发送消息失败", zap.Error(err))
@@ -142,6 +152,12 @@ func (webSocketUseCase *WebSocketUseCase) ProcessServiceMessage(ctx context.Cont
 		select {
 		case serviceMsg := <-serviceMsgChannel:
 			
+			// 空字符
+			if string(serviceMsg) == "" {
+				continue
+			}
+			
+			//
 			webSocketUseCase.logger.Info("处理服务器消息", zap.String("serviceMsg", string(serviceMsg)))
 			
 			serviceMessage := &ServiceMessage{}
